@@ -401,6 +401,202 @@
     font-size: 16px;
 }
 
+/* ===== БУРГЕР МЕНЮ ДЛЯ HEADER ===== */
+
+/* Скрываем бургер на десктопе */
+.burger-menu {
+    display: none;
+}
+
+/* Планшеты и телефоны (до 1024px) */
+@media (max-width: 1024px) {
+    .M-HEADER {
+        padding: 1rem;
+    }
+    
+    .M-NAV {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        flex-direction: row !important; /* Переопределяем column */
+    }
+    
+    .M-NAV-LOGO {
+        font-size: 20px;
+        z-index: 1001;
+        max-width: none !important; /* Убираем ограничение ширины */
+    }
+    
+    /* На мобильных навигационные ссылки скрыты по умолчанию */
+    .M-NAV-LINKS {
+        display: none; /* Скрываем по умолчанию на мобильных */
+    }
+    
+    /* Когда меню активно - показываем */
+    .M-NAV-LINKS.active {
+        display: flex;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        height: 100vh;
+        background: rgba(65, 68, 74, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        z-index: 1000;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .M-NAV-LINKS li {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.3s ease;
+    }
+    
+    .M-NAV-LINKS.active li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .M-NAV-LINKS a {
+        font-size: 24px;
+        color: white;
+        padding: 1rem 2rem;
+        display: block;
+    }
+    
+    .M-NAV-BUTTON {
+        display: none !important;
+    }
+    
+    /* Бургер кнопка */
+    .burger-menu {
+        display: block;
+        width: 30px;
+        height: 25px;
+        position: relative;
+        z-index: 1001;
+        cursor: pointer;
+    }
+    
+    .burger-menu span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background: white;
+        border-radius: 3px;
+        position: absolute;
+        left: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .burger-menu span:nth-child(1) {
+        top: 0;
+    }
+    
+    .burger-menu span:nth-child(2) {
+        top: 11px;
+    }
+    
+    .burger-menu span:nth-child(3) {
+        top: 22px;
+    }
+    
+    .burger-menu.active span:nth-child(1) {
+        transform: rotate(45deg);
+        top: 11px;
+    }
+    
+    .burger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .burger-menu.active span:nth-child(3) {
+        transform: rotate(-45deg);
+        top: 11px;
+    }
+    
+    /* Кнопка связи в мобильном меню */
+    .mobile-contact-btn {
+        display: block;
+        background-color: #ff6347;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 1.5rem;
+        margin-top: 2rem;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .mobile-contact-btn:hover {
+        background-color: #ff4500;
+    }
+}
+
+/* Телефоны (до 768px) */
+@media (max-width: 768px) {
+    .M-NAV-LINKS.active {
+        width: 100% !important;
+    }
+    
+    .M-NAV-LINKS a {
+        font-size: 20px !important;
+    }
+    
+    .burger-menu {
+        width: 25px;
+        height: 20px;
+    }
+    
+    .burger-menu span {
+        height: 2px;
+    }
+    
+    .burger-menu span:nth-child(2) {
+        top: 9px;
+    }
+    
+    .burger-menu span:nth-child(3) {
+        top: 18px;
+    }
+    
+    .burger-menu.active span:nth-child(1),
+    .burger-menu.active span:nth-child(3) {
+        top: 9px;
+    }
+    
+    /* Убираем конфликтующие стили */
+    .M-NAV {
+        flex-direction: row !important;
+        gap: 0 !important;
+    }
+}
+
+/* Маленькие телефоны (до 576px) */
+@media (max-width: 576px) {
+    .M-NAV-LOGO {
+        font-size: 18px !important;
+        max-width: 70%;
+    }
+    
+    .M-NAV-LINKS a {
+        font-size: 18px !important;
+        padding: 0.8rem 1.5rem !important;
+    }
+    
+    .mobile-contact-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 16px;
+    }
+}
+
 /* ===== АДАПТИВНАЯ ВЕРСИЯ ===== */
 
 /* Ноутбуки (1024px - 1440px) */
@@ -450,6 +646,7 @@
     
     .M-NAV-BUTTON {
         padding: 0.8rem 1.5rem;
+        display: none !important; /* Скрываем на планшетах */
     }
     
     .M-CATALOG {
@@ -501,24 +698,41 @@
     }
     
     .M-NAV {
-        flex-direction: column;
-        gap: 1rem;
+        flex-direction: row !important; /* Меняем на row для бургера */
+        gap: 0;
+        justify-content: space-between;
     }
     
+    /* На мобильных навигационные ссылки скрыты по умолчанию */
     .M-NAV-LINKS {
-        position: static;
-        transform: none;
+        display: none; /* Скрываем по умолчанию */
+    }
+    
+    /* Когда меню активно - показываем */
+    .M-NAV-LINKS.active {
+        display: flex;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(65, 68, 74, 0.98);
+        flex-direction: column;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 1.5rem;
+        align-items: center;
+        gap: 3rem;
+        z-index: 1000;
+        margin: 0;
+        padding: 0;
     }
     
     .M-NAV-LINKS a {
-        font-size: 20px;
+        font-size: 20px !important;
+        padding: 1rem 2rem !important;
     }
     
     .M-NAV-BUTTON {
-        margin: 0 auto;
+        display: none !important;
     }
     
     .M-CATALOG {
@@ -584,17 +798,17 @@
 
 /* Малые телефоны (до 576px) */
 @media (max-width: 576px) {
-    .M-NAV-LINKS {
-        flex-direction: column;
-        gap: 1rem;
+    .M-NAV-LINKS.active {
+        flex-direction: column !important;
+        gap: 3rem !important;
     }
     
     .M-NAV-LINKS a {
-        font-size: 18px;
+        font-size: 18px !important;
     }
     
     .M-NAV-LOGO {
-        font-size: 20px;
+        font-size: 18px !important;
     }
     
     .slide .caption h1 {
@@ -665,16 +879,7 @@
     }
     
     .M-NAV-LOGO {
-        font-size: 18px;
-    }
-    
-    .M-NAV-BUTTON {
-        padding: 0.6rem 1rem;
-        font-size: 14px;
-    }
-    
-    .M-NAV-BUTTON a {
-        font-size: 14px;
+        font-size: 16px;
     }
     
     .brand {
@@ -717,11 +922,29 @@
         font-size: 36px;
     }
     
-    .M-NAV-LINKS {
-        gap: 1rem;
+    .M-NAV-LINKS.active {
+        gap: 1.5rem !important;
     }
     
     .M-NAV-LINKS a {
+        font-size: 16px !important;
+        padding: 0.5rem 1rem !important;
+    }
+}
+
+
+    
+/* Для очень маленькой высоты */
+@media (max-height: 500px) {
+    .slide .caption h1 {
+        font-size: 48px;
+    }
+    
+    .slide .caption p {
         font-size: 16px;
+    }
+    
+    .scroll-down {
+        display: none; /* Скрываем стрелку на очень маленьких экранах */
     }
 }
