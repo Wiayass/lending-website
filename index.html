@@ -15,13 +15,25 @@
     <header class="M-HEADER">
         <nav class="M-NAV">
             <a href="/" class="M-NAV-LOGO">YINO Industries Kazakhstan</a>
+
+            <!-- Бургер кнопка -->
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <ul class="M-NAV-LINKS">
                 <li><a href="/about">О компании</a></li>
                 <li><a href="/about">Производство</a></li>
                 <li><a href="/" id="M-CATALOG-SCROLL" class="M-CATALOG-SCROLL">Каталог</a></li>
                 <li><a href="/contact">Офис</a></li>
+                <!-- Кнопка для мобильной версии будет добавлена через JS -->
             </ul>
-            <button class="M-NAV-BUTTON"><a href="https://wa.me/77750271151" target="_blank" rel="noopener noreferrer">Связаться</a></button>
+            
+            <button class="M-NAV-BUTTON">
+                <a href="https://wa.me/77750271151" target="_blank" rel="noopener noreferrer">Связаться</a>
+            </button>
         </nav>
     </header>
 
@@ -302,6 +314,68 @@
             });
         });
 
+        // Бургер меню
+        const burgerMenu = document.querySelector('.burger-menu');
+        const navLinks = document.querySelector('.M-NAV-LINKS');
+        const body = document.body;
+
+        // Функция для добавления/удаления мобильной кнопки
+        function toggleMobileButton() {
+            const mobileContactBtn = document.querySelector('.mobile-contact-btn');
+            
+            if (window.innerWidth <= 1024) {
+                if (!mobileContactBtn) {
+                    const li = document.createElement('li');
+                    li.className = 'mobile-contact-item';
+                    li.innerHTML = `
+                        <button class="mobile-contact-btn">
+                            <a href="https://wa.me/77750271151" target="_blank" rel="noopener noreferrer">Связаться</a>
+                        </button>
+                    `;
+                    navLinks.appendChild(li);
+                }
+            } else {
+                if (mobileContactBtn) {
+                    mobileContactBtn.parentElement.remove();
+                }
+            }
+}
+
+        // Инициализация при загрузке и изменении размера
+        toggleMobileButton();
+        window.addEventListener('resize', toggleMobileButton);
+
+        burgerMenu.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+        });
+
+        // Закрытие меню при клике на ссылку
+        const navLinksItems = document.querySelectorAll('.M-NAV-LINKS a');
+        navLinksItems.forEach(item => {
+            item.addEventListener('click', function() {
+                burgerMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+        });
+
+        // Запрет скролла при открытом меню
+        const style = document.createElement('style');
+        style.textContent = `
+            .no-scroll {
+                overflow: hidden;
+            }
+            
+            /* Скрываем обычную кнопку на мобильных */
+            @media (max-width: 1024px) {
+                .M-NAV-BUTTON {
+                    display: none !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
